@@ -1,0 +1,10 @@
+.{
+    .name = .azazel_parity_zig_gamedev,
+    .version = "0.0.0",
+    .fingerprint = 0x5ed21170cc04c699,
+    .minimum_zig_version = "0.15.1",
+    .dependencies = .{
+        .zmath = .{ .url = "git+https://github.com/zig-gamedev/zmath#3a5955b2b72cd081563fbb084eff05bffd1e3fbb", .hash = "zmath-0.11.0-dev-wjwivdMsAwD-xaLj76YHUq3t9JDH-X16xuMTmnDzqbu2" },
+    },
+    .paths = .{""},
+}
