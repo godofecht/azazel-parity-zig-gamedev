@@ -31,11 +31,14 @@ zmath's SIMD code compiled and ran.
 
 ## Comparison
 
-| Build | What it does | Config size |
-|-------|--------------|-------------|
-| azazel | consumes `zmath` (module root) via a CUE `pkg_imports` model | `project.cue`, 12 lines |
-| zaza | consumes `zmath` via the standard Zig build graph | `build.zig`,       26 lines |
+Clean-cache builds with dependencies pre-fetched, Apple Silicon, fastest of two runs.
+`native` is zmath's own `zig build` (the package alone).
 
-Both reach the same package the same way underneath (`b.dependency("zmath")`).
-The difference is the surface: azazel states the import as data; zaza writes the
-few lines of Zig build graph directly.
+| Build | Clean build | Config |
+|-------|-------------|--------|
+| azazel | 4.9 s | `project.cue` — 12 lines · 423 B |
+| zaza | 4.6 s | `build.zig` — 26 lines · 982 B |
+| native (zmath's own `zig build` (the package alone)) | 3.8 s | — |
+
+**Here azazel/zaza build the zmath package *and* a consumer on top, so they run a touch longer than building zmath by itself.**
+
