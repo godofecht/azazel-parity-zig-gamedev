@@ -31,14 +31,20 @@ zmath's SIMD code compiled and ran.
 
 ## Comparison
 
-Clean-cache builds with dependencies pre-fetched, Apple Silicon, fastest of two runs.
-`native` is zmath's own `zig build` (the package alone).
+Clean-cache builds, deps pre-fetched, Apple Silicon, fastest of two runs.
+Here `native` is zmath compiling itself (`zig build test`, which builds the whole
+library and runs its tests).
 
 | Build | Clean build | Config |
 |-------|-------------|--------|
-| azazel | 4.9 s | `project.cue` — 12 lines · 423 B |
-| zaza | 4.6 s | `build.zig` — 26 lines · 982 B |
-| native (zmath's own `zig build` (the package alone)) | 3.8 s | — |
+| azazel | 4.8 s | `project.cue` — 12 lines |
+| zaza | 4.6 s | `build.zig` — 26 lines |
+| native (zmath `zig build test`) | 3.8 s | — |
 
-**Here azazel/zaza build the zmath package *and* a consumer on top, so they run a touch longer than building zmath by itself.**
+**This is the one repo where azazel and zaza are slower than native, and honestly
+so: zmath is consumed as a package, so each build runs zmath's own `build.zig`
+*and then* compiles a consumer that forces the whole library to compile. You
+cannot build a package faster than the package builds itself. The "faster than
+native" cases (libxev, libvaxis, tigerbeetle) are the ones where azazel/zaza
+build a scoped slice of a much larger project.**
 

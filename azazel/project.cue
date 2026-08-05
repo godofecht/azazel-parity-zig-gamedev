@@ -1,5 +1,5 @@
-// Azazel builds a consumer of zig-gamedev's zmath package (the pure-Zig SIMD
-// math library, exposed as module "root"), declared as a CUE model. zmath is a
+// Azazel builds a consumer of zig-gamedev's zmath that forces the whole library
+// to compile (refAllDecls) and exercises the concrete SIMD API. zmath is a
 // package dependency; no source is vendored. Lane 0.16.
 package build
 
