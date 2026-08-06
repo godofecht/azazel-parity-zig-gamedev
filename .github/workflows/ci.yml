@@ -9,6 +9,8 @@ jobs:
   azazel:
     name: azazel builds a zmath consumer
     runs-on: ubuntu-latest
+    permissions:
+      contents: write   # upload build artifacts to this repo's 'cache' release
     steps:
       - uses: actions/checkout@v4
       - name: Cache Zig global cache
@@ -28,9 +30,11 @@ jobs:
           sudo tar -xzf /tmp/cue.tgz -C /usr/local/bin cue
       - name: Build zmath consumer via azazel (CUE model)
         working-directory: azazel
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          sh gen_build_spec.sh
-          time zig build
+          # free model-keyed shared cache: HIT downloads zig-out and skips the build
+          time sh cache_build.sh
           ./zig-out/bin/zmath_probe
   zaza:
     name: zaza builds a zmath consumer
